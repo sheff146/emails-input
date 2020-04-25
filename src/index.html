@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -11,12 +11,20 @@
   </title>
 
   <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
-
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div> You have successfully started your Typescript application using Webpack. Open your console to see your printed message from the index.ts file </div>
-  <p>By <a href="https://twitter.com/renaudin_yann">@renaudin_yann</a> </p>
+  <div class="share-form main-block">
+    <div class="share-form__header">
+      <h2 class="share-form__title">Share <strong>Board name</strong> with others</h2>
+    </div>
+    <div class="share-form__body"></div>
+    <div class="share-form__footer">
+      <button class="share-form__button">Add email</button>
+      <button class="share-form__button">Get emails count</button>
+    </div>
+  </div>
 </body>
 
 </html>
