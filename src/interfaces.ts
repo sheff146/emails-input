@@ -3,7 +3,7 @@ export interface IEmailsInput {
 
     replaceEmails(emails: string[]): void;
 
-    subscribe(callback: CallbackFn): ISubscription;
+    subscribe(callback: CallbackFn<IEmail>): ISubscription;
 }
 
 export interface IEmail {
@@ -11,13 +11,13 @@ export interface IEmail {
     isValid: boolean;
 }
 
-export type CallbackFn = (changes: IEmailsChanges) => void;
+export type CallbackFn<T> = (changes: IChanges<T>) => void;
 
 export interface ISubscription {
     readonly unsubscribe: () => void;
 }
 
-export interface IEmailsChanges {
-    addedItems: IEmail[];
-    removedItems: IEmail[];
+export interface IChanges<T> {
+    addedItems: T[];
+    removedItems: T[];
 }

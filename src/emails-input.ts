@@ -1,11 +1,14 @@
 import { Email } from './email';
-import { CallbackFn, IEmail, IEmailsChanges, IEmailsInput, ISubscription } from './interfaces';
+import { CallbackFn, IEmail, IChanges, IEmailsInput, ISubscription } from './interfaces';
+import { EmailsInputRenderer } from './emails-input-renderer';
 
 export class EmailsInput implements IEmailsInput {
-    private _emails: Email[] = [];
-    private _callbacks: CallbackFn[] = [];
+    private readonly _emails: Email[] = [];
+    private readonly _callbacks: CallbackFn<IEmail>[] = [];
+    private readonly _renderer: EmailsInputRenderer;
 
     constructor(container: HTMLElement) {
+        this._renderer = new EmailsInputRenderer(container, this.onViewChanges.bind(this));
     }
 
     getAllEmails(): IEmail[] {
@@ -16,10 +19,12 @@ export class EmailsInput implements IEmailsInput {
         const newEmails = emails.map(email => new Email(email));
         const removedEmails = this._emails.splice(0, this._emails.length, ...newEmails);
 
+        this._renderer.render(this._emails);
+
         this.notifySubscribers(newEmails, removedEmails);
     }
 
-    subscribe(callback: CallbackFn): ISubscription {
+    subscribe(callback: CallbackFn<IEmail>): ISubscription {
         this._callbacks.push(callback);
 
         return {
@@ -31,7 +36,7 @@ export class EmailsInput implements IEmailsInput {
     }
 
     private notifySubscribers(added: Email[], removed: Email[]): void {
-        const changes: IEmailsChanges = {
+        const changes: IChanges<IEmail> = {
             addedItems: added.map(getEmailValue),
             removedItems: removed.map(getEmailValue)
         };
@@ -44,6 +49,22 @@ export class EmailsInput implements IEmailsInput {
                 console.error(e);
             }
         })
+    }
+
+    private onViewChanges(changes: IChanges<string>) {
+        const newEmails = changes.addedItems.map(email => new Email(email));
+        const removedEmails: Email[] = [];
+
+        changes.removedItems.forEach(emailStr => {
+            const index = this._emails.findIndex(email => email.value === emailStr);
+            const removedItem = this._emails.splice(index, 1);
+            removedEmails.push(...removedItem);
+        });
+        this._emails.push(...newEmails);
+
+        this._renderer.render(this._emails);
+
+        this.notifySubscribers(newEmails, removedEmails);
     }
 }
 
