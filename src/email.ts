@@ -17,5 +17,6 @@ export class Email {
 }
 
 function isValidEmail(value: string): boolean {
+    // TODO: Add email validation
     return /./.test(value);
 }

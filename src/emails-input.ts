@@ -1,11 +1,11 @@
 import { Email } from './email';
-import { CallbackFn, IEmail, IEmailsChanges, IEmailsInput, IEmailsInputOptions, ISubscription } from './interfaces';
+import { CallbackFn, IEmail, IEmailsChanges, IEmailsInput, ISubscription } from './interfaces';
 
 export class EmailsInput implements IEmailsInput {
     private _emails: Email[] = [];
     private _callbacks: CallbackFn[] = [];
 
-    constructor(container: HTMLElement, options: IEmailsInputOptions) {
+    constructor(container: HTMLElement) {
     }
 
     getAllEmails(): IEmail[] {

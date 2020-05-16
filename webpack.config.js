@@ -12,7 +12,7 @@ const plugins = [
   }),
   new HtmlWebpackPlugin({
     title: 'Emails input demo',
-    template: '!!ejs-loader!src/index.html'
+    template: '!!ejs-loader!src/index.ejs'
   }),
   new webpack.LoaderOptionsPlugin({
     options: {

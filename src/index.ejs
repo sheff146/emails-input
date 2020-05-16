@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+
+    <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <%= htmlWebpackPlugin.tags.headTags %>
+</head>
+
+<body>
+<div class="share-form main-block">
+    <div class="share-form__header">
+        <h2 class="share-form__title">Share <strong>Board name</strong> with others</h2>
+    </div>
+    <div class="share-form__body" id="input-container"></div>
+    <div class="share-form__footer">
+        <button class="share-form__button" id="add-button">Add email</button>
+        <button class="share-form__button" id="count-button">Get emails count</button>
+    </div>
+</div>
+<%= htmlWebpackPlugin.tags.bodyTags %>
+<script>
+    var container = document.getElementById("input-container");
+    var emailsInput = new EmailsInput(container);
+
+    var addButton = document.getElementById("add-button");
+    var countButton = document.getElementById("count-button");
+
+    addButton.addEventListener("click", onAddButtonClick);
+    countButton.addEventListener("click", onCountButtonClick);
+
+    function onAddButtonClick() {
+        var emails = emailsInput
+            .getAllEmails()
+            .map(function (email) {
+                return email.value;
+            });
+
+        var newEmail = generateNewEmail();
+        emails.push(newEmail);
+
+        emailsInput.replaceEmails(emails);
+    }
+
+    function generateNewEmail() {
+        // TODO: Add random email generation
+        return "alexandre.shevchenko@gmail.com";
+    }
+
+    function onCountButtonClick() {
+        var validEmails = emailsInput
+            .getAllEmails()
+            .filter(function (email) {
+                return email.isValid;
+            });
+
+        alert("Number of valid e-mails: " + validEmails.length);
+    }
+
+    emailsInput.subscribe(onEmailsInputChanges)
+
+    function onEmailsInputChanges(changes) {
+        console.log("Changes in e-mails input", changes);
+    }
+</script>
+</body>
+
+</html>

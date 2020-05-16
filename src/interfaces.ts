@@ -7,18 +7,14 @@ export interface IEmailsInput {
 }
 
 export interface IEmail {
-    readonly value: string;
-    readonly isValid: boolean;
+    value: string;
+    isValid: boolean;
 }
 
 export type CallbackFn = (changes: IEmailsChanges) => void;
 
 export interface ISubscription {
     readonly unsubscribe: () => void;
-}
-
-export interface IEmailsInputOptions {
-
 }
 
 export interface IEmailsChanges {
