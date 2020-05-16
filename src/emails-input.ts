@@ -1,21 +1,7 @@
-import { Email, IEmail } from './email';
+import { Email } from './email';
+import { CallbackFn, IEmail, IEmailsChanges, IEmailsInput, IEmailsInputOptions, ISubscription } from './interfaces';
 
-export interface IEmailsInputOptions {
-
-}
-
-interface ISubscription {
-    readonly unsubscribe: () => void;
-}
-
-type CallbackFn = (changes: IEmailsChanges) => void;
-
-interface IEmailsChanges {
-    addedItems: IEmail[];
-    removedItems: IEmail[];
-}
-
-export class EmailsInput {
+export class EmailsInput implements IEmailsInput {
     private _emails: Email[] = [];
     private _callbacks: CallbackFn[] = [];
 
@@ -23,7 +9,7 @@ export class EmailsInput {
     }
 
     getAllEmails(): IEmail[] {
-        return this._emails.map(email => email.getValue());
+        return this._emails.map(getEmailValue);
     }
 
     replaceEmails(emails: string[]): void {
@@ -46,8 +32,8 @@ export class EmailsInput {
 
     private notifySubscribers(added: Email[], removed: Email[]): void {
         const changes: IEmailsChanges = {
-            addedItems: added.map(email => email.getValue()),
-            removedItems: removed.map(email => email.getValue())
+            addedItems: added.map(getEmailValue),
+            removedItems: removed.map(getEmailValue)
         };
 
         this._callbacks.forEach(cb => {
@@ -61,3 +47,9 @@ export class EmailsInput {
     }
 }
 
+function getEmailValue(email: Email): IEmail {
+    return {
+        value: email.value,
+        isValid: email.isValid
+    };
+}

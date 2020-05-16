@@ -1,8 +1,3 @@
-export interface IEmail {
-    readonly value: string;
-    readonly isValid: boolean;
-}
-
 export class Email {
     private readonly _value: string;
     private readonly _isValid: boolean;
@@ -18,13 +13,6 @@ export class Email {
     constructor(value: string) {
         this._value = value;
         this._isValid = isValidEmail(value);
-    }
-
-    getValue(): IEmail {
-        return {
-            value: this.value,
-            isValid: this.isValid
-        };
     }
 }
 
