@@ -8,6 +8,7 @@
     "outDir": "dist",
     "lib": ["es2017", "dom"],
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "removeComments": true
   },
