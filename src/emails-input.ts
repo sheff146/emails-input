@@ -1,11 +1,5 @@
 import { Email } from "./email";
-import {
-  CallbackFn,
-  IEmail,
-  IChanges,
-  IEmailsInput,
-  ISubscription
-} from "./interfaces";
+import { CallbackFn, IEmail, IChanges, IEmailsInput, ISubscription } from "./interfaces";
 import { EmailsInputRenderer } from "./emails-input-renderer";
 
 export class EmailsInput implements IEmailsInput {
@@ -14,10 +8,7 @@ export class EmailsInput implements IEmailsInput {
   private readonly _renderer: EmailsInputRenderer;
 
   constructor(container: HTMLElement) {
-    this._renderer = new EmailsInputRenderer(
-      container,
-      this.processChanges.bind(this)
-    );
+    this._renderer = new EmailsInputRenderer(container, this.processChanges.bind(this));
   }
 
   getAllEmails(): IEmail[] {
@@ -42,22 +33,6 @@ export class EmailsInput implements IEmailsInput {
     };
   }
 
-  private notifySubscribers(added: Email[], removed: Email[]): void {
-    const changes: IChanges<IEmail> = {
-      addedItems: added.map(getEmailValue),
-      removedItems: removed.map(getEmailValue)
-    };
-
-    this._callbacks.forEach(cb => {
-      try {
-        cb(changes);
-      } catch (e) {
-        // Error in the callback. Log and ignore
-        console.error(e);
-      }
-    });
-  }
-
   private processChanges(changes: IChanges<string>) {
     const removedEmails: Email[] = [];
     changes.removedItems.forEach(emailStr => {
@@ -68,6 +43,7 @@ export class EmailsInput implements IEmailsInput {
 
     const newEmails = changes.addedItems
       .reduce<string[]>((arr, item) => {
+        // filter out empty and duplicate values
         if (item) {
           const exists =
             arr.find(arrItem => arrItem === item) ||
@@ -85,6 +61,22 @@ export class EmailsInput implements IEmailsInput {
     this._renderer.render(this._emails);
 
     this.notifySubscribers(newEmails, removedEmails);
+  }
+
+  private notifySubscribers(added: Email[], removed: Email[]): void {
+    const changes: IChanges<IEmail> = {
+      addedItems: added.map(getEmailValue),
+      removedItems: removed.map(getEmailValue)
+    };
+
+    this._callbacks.forEach(cb => {
+      try {
+        cb(changes);
+      } catch (e) {
+        // Error in the callback. Log and ignore
+        console.error(e);
+      }
+    });
   }
 }
 

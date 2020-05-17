@@ -15,10 +15,7 @@ const styles = {
 export class EmailsInputRenderer {
   private readonly _wrapper: HTMLDivElement;
 
-  constructor(
-    private container: HTMLElement,
-    private onChanges: CallbackFn<string>
-  ) {
+  constructor(private container: HTMLElement, private onChanges: CallbackFn<string>) {
     this._wrapper = this.createWrapper();
     container.appendChild(this._wrapper);
   }
@@ -39,9 +36,7 @@ export class EmailsInputRenderer {
 
     const itemsToAdd: Email[] = [];
     emails.forEach(email => {
-      const exists = existingItems.find(
-        item => email.value === item.dataset.email
-      );
+      const exists = existingItems.find(item => email.value === item.dataset.email);
       if (!exists) {
         itemsToAdd.push(email);
       }
@@ -52,6 +47,7 @@ export class EmailsInputRenderer {
       const item = this.createEmailItem(email);
       this._wrapper.insertBefore(item, input);
     });
+    this._wrapper.scrollTop = this._wrapper.scrollHeight - this._wrapper.clientHeight;
   }
 
   private createWrapper(): HTMLDivElement {
