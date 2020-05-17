@@ -8,7 +8,7 @@ export class EmailsInput implements IEmailsInput {
     private readonly _renderer: EmailsInputRenderer;
 
     constructor(container: HTMLElement) {
-        this._renderer = new EmailsInputRenderer(container, this.onViewChanges.bind(this));
+        this._renderer = new EmailsInputRenderer(container, this.processChanges.bind(this));
     }
 
     getAllEmails(): IEmail[] {
@@ -16,7 +16,7 @@ export class EmailsInput implements IEmailsInput {
     }
 
     replaceEmails(emails: string[]): void {
-        this.onViewChanges({ addedItems: emails, removedItems: this._emails.map(email => email.value) })
+        this.processChanges({ addedItems: emails, removedItems: this._emails.map(email => email.value) })
     }
 
     subscribe(callback: CallbackFn<IEmail>): ISubscription {
@@ -46,7 +46,7 @@ export class EmailsInput implements IEmailsInput {
         })
     }
 
-    private onViewChanges(changes: IChanges<string>) {
+    private processChanges(changes: IChanges<string>) {
         const removedEmails: Email[] = [];
         changes.removedItems.forEach(emailStr => {
             const index = this._emails.findIndex(email => email.value === emailStr);
@@ -56,9 +56,11 @@ export class EmailsInput implements IEmailsInput {
 
         const newEmails = changes.addedItems
             .reduce<string[]>((arr, item) => {
-                const exists = arr.find(arrItem => arrItem === item) || this._emails.find(email => email.value === item);
-                if (!exists) {
-                    arr.push(item);
+                if (item) {
+                    const exists = arr.find(arrItem => arrItem === item) || this._emails.find(email => email.value === item);
+                    if (!exists) {
+                        arr.push(item);
+                    }
                 }
                 return arr;
             }, [])
