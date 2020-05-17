@@ -33,6 +33,7 @@ button {
 .share-form__body {
     padding: 24px 50px;
     flex-grow: 1;
+    display: flex;
 }
 
 .share-form__footer {

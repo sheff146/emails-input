@@ -2,7 +2,7 @@ import { CallbackFn } from './interfaces';
 import { Email } from './email';
 
 export class EmailsInputRenderer {
-    private _wrapper: HTMLDivElement;
+    private readonly _wrapper: HTMLDivElement;
 
     constructor(private container: HTMLElement, private onChanges: CallbackFn<string>) {
         this._wrapper = this.createWrapper();
@@ -10,9 +10,29 @@ export class EmailsInputRenderer {
     }
 
     render(emails: Email[]) {
+        let existingItems = Array.from(this._wrapper.querySelectorAll('.wrapper__item')) as HTMLElement[];
+
+        existingItems = existingItems.filter((item) => {
+            const exists = emails.find(email => email.value === item.dataset.email);
+            if (!exists) {
+                this._wrapper.removeChild(item);
+            }
+
+            return exists;
+        });
+
+        const itemsToAdd: Email[] = [];
         emails.forEach(email => {
+            const exists = existingItems.find(item => email.value === item.dataset.email);
+            if (!exists) {
+                itemsToAdd.push(email);
+            }
+        });
+
+        const input = this._wrapper.querySelector('.wrapper__input');
+        itemsToAdd.forEach(email => {
             const item = this.createEmailItem(email);
-            this._wrapper.appendChild(item);
+            this._wrapper.insertBefore(item, input);
         });
     }
 
@@ -24,8 +44,9 @@ export class EmailsInputRenderer {
 
         wrapper.addEventListener('click', (e) => {
             const target = e.target as HTMLElement;
-            if (target.className === 'wrapper__item-remove') {
-                const email = target.parentElement?.dataset?.email;
+            const element = getAncestorWithClassName(target, 'wrapper__item-remove');
+            if (element) {
+                const email = element.parentElement?.dataset?.email;
                 if (email) {
                     this.onChanges({ addedItems: [], removedItems: [email] });
                 }
@@ -48,14 +69,15 @@ export class EmailsInputRenderer {
             if (target.className === 'wrapper__input') {
                 this.processSubmit(target as HTMLInputElement);
             }
-        });
+        }, true);
 
         wrapper.addEventListener('paste', (e) => {
-            debugger;
             const target = e.target as HTMLElement;
 
             if (target.className === 'wrapper__input') {
-                this.processSubmit(target as HTMLInputElement);
+                setTimeout(() => {
+                    this.processSubmit(target as HTMLInputElement);
+                }, 0);
             }
         });
 
@@ -85,8 +107,22 @@ export class EmailsInputRenderer {
             item.classList.add('wrapper__item_invalid');
         }
 
-        item.innerHTML = `<span class="wrapper__item-title">${email.value}</span><button class="wrapper__item-remove">Remove</button>`;
+        item.innerHTML =
+            `<span class="wrapper__item-title">${email.value}</span>` +
+            `<button class="wrapper__item-remove" aria-label="Remove item">${require('!!html-loader!./remove.svg')}</button>`;
 
         return item;
     }
+}
+
+function getAncestorWithClassName(element: HTMLElement | null, className: string): HTMLElement | null {
+    if (!element) {
+        return null;
+    }
+
+    if (element.classList.contains(className)) {
+        return element;
+    }
+
+    return getAncestorWithClassName(element.parentElement, className);
 }

@@ -29,7 +29,8 @@ var config = {
   context: path.resolve('./src'),
   entry: {
     app: './index.ts',
-    styles: './index.css'
+    styles: './index.css',
+    stylesinput: './emails-input.css'
   },
   output: {
     path: path.resolve('./dist'),
