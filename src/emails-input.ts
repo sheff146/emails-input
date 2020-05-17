@@ -16,12 +16,7 @@ export class EmailsInput implements IEmailsInput {
     }
 
     replaceEmails(emails: string[]): void {
-        const newEmails = emails.map(email => new Email(email));
-        const removedEmails = this._emails.splice(0, this._emails.length, ...newEmails);
-
-        this._renderer.render(this._emails);
-
-        this.notifySubscribers(newEmails, removedEmails);
+        this.onViewChanges({ addedItems: emails, removedItems: this._emails.map(email => email.value) })
     }
 
     subscribe(callback: CallbackFn<IEmail>): ISubscription {
@@ -52,14 +47,23 @@ export class EmailsInput implements IEmailsInput {
     }
 
     private onViewChanges(changes: IChanges<string>) {
-        const newEmails = changes.addedItems.map(email => new Email(email));
         const removedEmails: Email[] = [];
-
         changes.removedItems.forEach(emailStr => {
             const index = this._emails.findIndex(email => email.value === emailStr);
             const removedItem = this._emails.splice(index, 1);
             removedEmails.push(...removedItem);
         });
+
+        const newEmails = changes.addedItems
+            .reduce<string[]>((arr, item) => {
+                const exists = arr.find(arrItem => arrItem === item) || this._emails.find(email => email.value === item);
+                if (!exists) {
+                    arr.push(item);
+                }
+                return arr;
+            }, [])
+            .map(email => new Email(email));
+
         this._emails.push(...newEmails);
 
         this._renderer.render(this._emails);
