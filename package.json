@@ -16,7 +16,7 @@
     "start": "npm run server:dev",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
-    "deploy": "npm run build && gh-pages -d dist -m \"Initial deploy\""
+    "deploy": "npm run build && gh-pages -d dist -m \"Add scroll to bottom\""
   },
   "version": "0.0.1",
   "dependencies": {},
