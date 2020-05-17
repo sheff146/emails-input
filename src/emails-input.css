@@ -1,59 +1,59 @@
 .wrapper {
-    font-family: 'Open Sans', sans-serif;
-    overflow: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    background: #FFFFFF;
-    border: 1px solid #C3C2CF;
-    border-radius: 4px;
-    padding: 4px 6px;
+  font-family: "Open Sans", sans-serif;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  background: #ffffff;
+  border: 1px solid #c3c2cf;
+  border-radius: 4px;
+  padding: 4px 6px;
 }
 
 .wrapper__input {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    line-height: 24px;
-    flex-grow: 1;
-    border: none;
-    outline: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  flex-grow: 1;
+  border: none;
+  outline: none;
 }
 
 .wrapper__input::placeholder {
-    color: #C3C2CF;
+  color: #c3c2cf;
 }
 
 .wrapper__input,
 .wrapper__item {
-    margin: 2px 4px;
+  margin: 2px 4px;
 }
 
 .wrapper__item {
-    background: rgba(102, 153, 255, 0.2);
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    padding: 5px 8px;
-    min-width: 0;
+  background: rgba(102, 153, 255, 0.2);
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  min-width: 0;
 }
 
 .wrapper__item_invalid {
-    background: transparent;
-    border-bottom: 1px dashed #D92929;
-    border-radius: 0;
+  background: transparent;
+  border-bottom: 1px dashed #d92929;
+  border-radius: 0;
 }
 
 .wrapper__item-title {
-    font-size: 14px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-    color: #050038;
+  color: #050038;
 }
 
 .wrapper__item-remove {
-    padding: 0;
-    margin: 0 0 0 8px;
-    background: transparent;
-    border: none;
+  padding: 0;
+  margin: 0 0 0 8px;
+  background: transparent;
+  border: none;
 }

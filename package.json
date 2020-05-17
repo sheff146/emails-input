@@ -1,32 +1,6 @@
 {
   "author": "sheff146",
-  "dependencies": {},
   "description": "",
-  "devDependencies": {
-    "awesome-typescript-loader": "^5.2.0",
-    "cross-env": "^5.0.1",
-    "css-loader": "^1.0.0",
-    "ejs-loader": "^0.3.0",
-    "eslint": "^5.4.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^4.0.0",
-    "rimraf": "^2.6.1",
-    "source-map-loader": "^0.2.1",
-    "style-loader": "^0.22.1",
-    "tslint": "^5.5.0",
-    "tslint-loader": "^3.5.3",
-    "typescript": "^3.0.1",
-    "webpack": "^4.17.0",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5",
-    "@types/jest": "^25.1.4",
-    "jest": "^25.1.0",
-    "jest-config": "^25.1.0",
-    "ts-jest": "^25.2.1"
-  },
-  "directories": {
-    "test": "tests"
-  },
   "license": "MIT",
   "main": "src/index.ts",
   "name": "emails-input",
@@ -42,6 +16,33 @@
     "start": "npm run server:dev",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch"
+  },
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^25.1.4",
+    "awesome-typescript-loader": "^5.2.0",
+    "cross-env": "^5.0.1",
+    "css-loader": "^1.0.0",
+    "ejs-loader": "^0.3.0",
+    "eslint": "^5.4.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^4.0.0",
+    "jest": "^25.1.0",
+    "jest-config": "^25.1.0",
+    "prettier": "^1.19.1",
+    "rimraf": "^2.6.1",
+    "source-map-loader": "^0.2.1",
+    "style-loader": "^0.22.1",
+    "ts-jest": "^25.2.1",
+    "tslint": "^6.1.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^9.0.0",
+    "tslint-loader": "^3.5.3",
+    "typescript": "^3.0.1",
+    "webpack": "^4.17.0",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
   },
   "jest": {
     "transform": {
@@ -67,6 +68,5 @@
     "collectCoverageFrom": [
       "src/*.ts"
     ]
-  },
-  "version": "0.0.1"
+  }
 }
