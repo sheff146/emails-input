@@ -6,13 +6,77 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
+    <title>E-mails input demo</title>
 
-    <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
+    <meta name="description" content="E-mails input demo">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <%= htmlWebpackPlugin.tags.headTags %>
+    <style type="text/css">
+        body,
+        button {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .main-block {
+            max-width: 540px;
+            min-height: 300px;
+            max-height: 500px;
+            margin: auto;
+        }
+
+        .share-form {
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            background: #F8F8F7;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .share-form__header {
+            padding: 32px 50px 0;
+        }
+
+        .share-form__title {
+            font-size: 20px;
+            line-height: 27px;
+            font-weight: normal;
+            margin: 0;
+            color: #050038;
+        }
+
+        .share-form__body {
+            padding: 24px 50px;
+            flex-grow: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        .share-form__body > div {
+            align-self: stretch;
+            justify-self: stretch;
+            flex-grow: 1;
+        }
+
+        .share-form__footer {
+            padding: 24px 50px 32px;
+            background: #FFFFFF;
+        }
+
+        .share-form__button {
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            color: #FFFFFF;
+            background: #4262FF;
+            border: none;
+        }
+
+        .share-form__button:first-child {
+            margin-right: 16px;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +90,8 @@
         <button class="share-form__button" id="count-button">Get emails count</button>
     </div>
 </div>
-<%= htmlWebpackPlugin.tags.bodyTags %>
+</body>
+
 <script>
     var container = document.getElementById("input-container");
     var emailsInput = new EmailsInput(container);
@@ -51,8 +116,8 @@
     }
 
     function generateNewEmail() {
-        // TODO: Add random email generation
-        return "alexandre.shevchenko@gmail.com";
+        var number = Math.random();
+        return number + "@gmail.com";
     }
 
     function onCountButtonClick() {
@@ -71,6 +136,5 @@
         console.log("Changes in e-mails input", changes);
     }
 </script>
-</body>
 
 </html>

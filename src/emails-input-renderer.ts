@@ -1,6 +1,17 @@
 import { CallbackFn } from './interfaces';
 import { Email } from './email';
 
+const emailsInputStyles = require('./emails-input.css');
+
+const styles = {
+    wrapper: emailsInputStyles['wrapper'],
+    item: emailsInputStyles['wrapper__item'],
+    itemInvalid: emailsInputStyles['wrapper__item_invalid'],
+    itemTitle: emailsInputStyles['wrapper__item-title'],
+    itemRemove: emailsInputStyles['wrapper__item-remove'],
+    input: emailsInputStyles['wrapper__input']
+};
+
 export class EmailsInputRenderer {
     private readonly _wrapper: HTMLDivElement;
 
@@ -10,7 +21,7 @@ export class EmailsInputRenderer {
     }
 
     render(emails: Email[]) {
-        let existingItems = Array.from(this._wrapper.querySelectorAll('.wrapper__item')) as HTMLElement[];
+        let existingItems = Array.from(this._wrapper.querySelectorAll(`.${styles.item}`)) as HTMLElement[];
 
         existingItems = existingItems.filter((item) => {
             const exists = emails.find(email => email.value === item.dataset.email);
@@ -29,7 +40,7 @@ export class EmailsInputRenderer {
             }
         });
 
-        const input = this._wrapper.querySelector('.wrapper__input');
+        const input = this._wrapper.querySelector(`.${styles.input}`);
         itemsToAdd.forEach(email => {
             const item = this.createEmailItem(email);
             this._wrapper.insertBefore(item, input);
@@ -39,12 +50,12 @@ export class EmailsInputRenderer {
     private createWrapper(): HTMLDivElement {
         const wrapper = document.createElement('div');
 
-        wrapper.className = 'wrapper';
-        wrapper.innerHTML = `<input type="text" class="wrapper__input" placeholder="add more people..."/>`;
+        wrapper.className = styles.wrapper;
+        wrapper.innerHTML = `<input type="text" class="${styles.input}" placeholder="add more people..."/>`;
 
         wrapper.addEventListener('click', (e) => {
             const target = e.target as HTMLElement;
-            const element = getAncestorWithClassName(target, 'wrapper__item-remove');
+            const element = getAncestorWithClassName(target, styles.itemRemove);
             if (element) {
                 const email = element.parentElement?.dataset?.email;
                 if (email) {
@@ -56,7 +67,7 @@ export class EmailsInputRenderer {
         wrapper.addEventListener('keyup', (e) => {
             const target = e.target as HTMLElement;
 
-            if (target.className === 'wrapper__input') {
+            if (target.className === styles.input) {
                 if (e.key === 'Enter' || e.key === ',') {
                     this.processSubmit(target as HTMLInputElement);
                 }
@@ -66,7 +77,7 @@ export class EmailsInputRenderer {
         wrapper.addEventListener('blur', (e) => {
             const target = e.target as HTMLElement;
 
-            if (target.className === 'wrapper__input') {
+            if (target.className === styles.input) {
                 this.processSubmit(target as HTMLInputElement);
             }
         }, true);
@@ -74,7 +85,7 @@ export class EmailsInputRenderer {
         wrapper.addEventListener('paste', (e) => {
             const target = e.target as HTMLElement;
 
-            if (target.className === 'wrapper__input') {
+            if (target.className === styles.input) {
                 setTimeout(() => {
                     this.processSubmit(target as HTMLInputElement);
                 }, 0);
@@ -101,15 +112,15 @@ export class EmailsInputRenderer {
         const item = document.createElement('div');
 
         item.dataset.email = email.value;
-        item.classList.add('wrapper__item');
+        item.classList.add(styles.item);
 
         if (!email.isValid) {
-            item.classList.add('wrapper__item_invalid');
+            item.classList.add(styles.itemInvalid);
         }
 
         item.innerHTML =
-            `<span class="wrapper__item-title">${email.value}</span>` +
-            `<button class="wrapper__item-remove" aria-label="Remove item">${require('!!html-loader!./remove.svg')}</button>`;
+            `<span class="${styles.itemTitle}">${email.value}</span>` +
+            `<button class="${styles.itemRemove}" aria-label="Remove item">${require('!!html-loader!./remove.svg')}</button>`;
 
         return item;
     }
