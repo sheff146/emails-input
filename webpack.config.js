@@ -41,16 +41,6 @@ var config = {
         exclude: [/\/node_modules\//],
         use: ["awesome-typescript-loader", "source-map-loader"]
       },
-      !isProd
-        ? {
-            test: /\.(js|ts)$/,
-            loader: "istanbul-instrumenter-loader",
-            exclude: [/\/node_modules\//],
-            query: {
-              esModules: true
-            }
-          }
-        : null,
       { test: /\.html$/, loader: "html-loader" },
       {
         test: /\.css$/,
@@ -59,7 +49,7 @@ var config = {
           "css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
         ]
       }
-    ].filter(Boolean)
+    ]
   },
   resolve: {
     extensions: [".ts", ".js"]
