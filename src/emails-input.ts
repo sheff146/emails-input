@@ -7,8 +7,8 @@ export class EmailsInput implements IEmailsInput {
   private readonly _callbacks: CallbackFn<IEmail>[] = [];
   private readonly _renderer: EmailsInputRenderer;
 
-  constructor(container: HTMLElement) {
-    this._renderer = new EmailsInputRenderer(container, this.processChanges.bind(this));
+  constructor(wrapper: HTMLElement) {
+    this._renderer = new EmailsInputRenderer(wrapper, this.processChanges.bind(this));
   }
 
   getAllEmails(): IEmail[] {

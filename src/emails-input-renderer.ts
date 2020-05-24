@@ -4,33 +4,33 @@ import { Email } from "./email";
 const emailsInputStyles = require("./emails-input.css");
 
 const styles = {
-  wrapper: emailsInputStyles["wrapper"],
-  item: emailsInputStyles["wrapper__item"],
-  itemEmail: emailsInputStyles["wrapper__item_email"],
-  itemInvalid: emailsInputStyles["wrapper__item_invalid"],
-  itemTitle: emailsInputStyles["wrapper__item-title"],
-  itemRemove: emailsInputStyles["wrapper__item-remove"],
-  itemInput: emailsInputStyles["wrapper__item_input"],
-  input: emailsInputStyles["wrapper__input"]
+  container: emailsInputStyles["container"],
+  item: emailsInputStyles["container__item"],
+  emailItem: emailsInputStyles["container__item_email"],
+  invalidItem: emailsInputStyles["container__item_invalid"],
+  itemTitle: emailsInputStyles["container__email"],
+  itemRemove: emailsInputStyles["container__remove"],
+  inputItem: emailsInputStyles["container__item_input"],
+  input: emailsInputStyles["container__input"]
 };
 
 export class EmailsInputRenderer {
-  private readonly _wrapper: HTMLElement;
+  private readonly _container: HTMLElement;
 
-  constructor(private container: HTMLElement, private onChanges: CallbackFn<string>) {
-    this._wrapper = this.createWrapper();
-    container.appendChild(this._wrapper);
+  constructor(private wrapper: HTMLElement, private onChanges: CallbackFn<string>) {
+    this._container = this.createContainer();
+    wrapper.appendChild(this._container);
   }
 
   render(emails: Email[]) {
     let existingItems = Array.from(
-      this._wrapper.querySelectorAll(`.${styles.itemEmail}`)
+      this._container.querySelectorAll(`.${styles.emailItem}`)
     ) as HTMLElement[];
 
     existingItems = existingItems.filter(item => {
       const exists = emails.find(email => email.value === item.dataset.email);
       if (!exists) {
-        this._wrapper.removeChild(item);
+        this._container.removeChild(item);
       }
 
       return exists;
@@ -44,21 +44,21 @@ export class EmailsInputRenderer {
       }
     });
 
-    const input = this._wrapper.querySelector(`.${styles.itemInput}`);
+    const input = this._container.querySelector(`.${styles.inputItem}`);
     itemsToAdd.forEach(email => {
       const item = this.createEmailItem(email);
-      this._wrapper.insertBefore(item, input);
+      this._container.insertBefore(item, input);
     });
-    this._wrapper.scrollTop = this._wrapper.scrollHeight - this._wrapper.clientHeight;
+    this._container.scrollTop = this._container.scrollHeight - this._container.clientHeight;
   }
 
-  private createWrapper(): HTMLElement {
-    const wrapper = document.createElement("ul");
+  private createContainer(): HTMLElement {
+    const container = document.createElement("ul");
 
-    wrapper.className = styles.wrapper;
-    wrapper.innerHTML = `<li class="${styles.item} ${styles.itemInput}"><input type="text" class="${styles.input}" placeholder="add more people..."/></li>`;
+    container.className = styles.container;
+    container.innerHTML = `<li class="${styles.item} ${styles.inputItem}"><input type="text" class="${styles.input}" placeholder="add more people..."/></li>`;
 
-    wrapper.addEventListener("click", e => {
+    container.addEventListener("click", e => {
       const target = e.target as HTMLElement;
 
       // istanbul ignore else
@@ -72,7 +72,7 @@ export class EmailsInputRenderer {
       }
     });
 
-    wrapper.addEventListener("keyup", e => {
+    container.addEventListener("keyup", e => {
       const target = e.target as HTMLElement;
 
       // istanbul ignore else
@@ -84,7 +84,7 @@ export class EmailsInputRenderer {
       }
     });
 
-    wrapper.addEventListener(
+    container.addEventListener(
       "blur",
       e => {
         const target = e.target as HTMLElement;
@@ -97,7 +97,7 @@ export class EmailsInputRenderer {
       true
     );
 
-    wrapper.addEventListener("paste", e => {
+    container.addEventListener("paste", e => {
       const target = e.target as HTMLElement;
 
       // istanbul ignore else
@@ -108,7 +108,7 @@ export class EmailsInputRenderer {
       }
     });
 
-    return wrapper;
+    return container;
   }
 
   private processSubmit(target: HTMLInputElement) {
@@ -129,10 +129,10 @@ export class EmailsInputRenderer {
 
     item.dataset.email = email.value;
     item.classList.add(styles.item);
-    item.classList.add(styles.itemEmail);
+    item.classList.add(styles.emailItem);
 
     if (!email.isValid) {
-      item.classList.add(styles.itemInvalid);
+      item.classList.add(styles.invalidItem);
     }
 
     item.innerHTML =

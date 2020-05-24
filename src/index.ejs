@@ -84,7 +84,7 @@
     <div class="share-form__header">
         <h2 class="share-form__title">Share <strong>Board name</strong> with others</h2>
     </div>
-    <div class="share-form__body" id="input-container"></div>
+    <div class="share-form__body" id="input-wrapper"></div>
     <div class="share-form__footer">
         <button class="share-form__button" id="add-button">Add email</button>
         <button class="share-form__button" id="count-button">Get emails count</button>
@@ -93,8 +93,8 @@
 </body>
 
 <script>
-    var container = document.getElementById("input-container");
-    var emailsInput = new EmailsInput(container);
+    var wrapper = document.getElementById("input-wrapper");
+    var emailsInput = new EmailsInput(wrapper);
 
     var addButton = document.getElementById("add-button");
     var countButton = document.getElementById("count-button");

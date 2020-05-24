@@ -9,9 +9,9 @@ describe("Emails Input Renderer", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     emails = [new Email("abcdef"), new Email("abcdef@ghijk.lm"), new Email("fedcba@ghijk.lm")];
-    document.body.innerHTML = '<div id="input-container"></div>';
+    document.body.innerHTML = '<div id="input-wrapper"></div>';
     renderer = new EmailsInputRenderer(
-      document.getElementById("input-container") as HTMLElement,
+      document.getElementById("input-wrapper") as HTMLElement,
       onChangesMock
     );
   });
@@ -44,21 +44,21 @@ describe("Emails Input Renderer", () => {
   describe("(API)", () => {
     const initRemoveClick = (email: string) => {
       const button = document.querySelector(
-        `[data-email="${email}"] .wrapper__item-remove`
+        `[data-email="${email}"] .container__remove`
       ) as HTMLElement;
       const event = new MouseEvent("click", { bubbles: true });
       button.dispatchEvent(event);
     };
 
     const initSubmitByKey = (text: string, submitKey: "Enter" | ",") => {
-      const input = document.querySelector(`.wrapper__input`) as HTMLInputElement;
+      const input = document.querySelector(`.container__input`) as HTMLInputElement;
       input.value = text;
       const event = new KeyboardEvent("keyup", { bubbles: true, key: submitKey });
       input.dispatchEvent(event);
     };
 
     const initSubmitByEvent = (text: string, eventName: "blur" | "paste") => {
-      const input = document.querySelector(`.wrapper__input`) as HTMLInputElement;
+      const input = document.querySelector(`.container__input`) as HTMLInputElement;
       input.value = text;
 
       const event = new Event(eventName, { bubbles: true });

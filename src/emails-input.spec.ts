@@ -6,8 +6,8 @@ describe("EmailsInput API", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    document.body.innerHTML = '<div id="input-container"></div>';
-    input = new EmailsInput(document.getElementById("input-container") as HTMLElement);
+    document.body.innerHTML = '<div id="input-wrapper"></div>';
+    input = new EmailsInput(document.getElementById("input-wrapper") as HTMLElement);
   });
 
   it("should create an empty input", () => {
@@ -93,7 +93,7 @@ describe("EmailsInput API", () => {
 
   it("should handle subscriber error", () => {
     const error = new Error("test");
-    const consoleSpy = jest.spyOn(console, "error");
+    const consoleSpy = jest.spyOn(console, "error").mockImplementationOnce(() => {});
 
     input.subscribe(() => {
       throw error;
