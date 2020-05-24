@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Emails Input Renderer (snapshots) should create empty input 1`] = `
+<body>
+  <div
+    id="input-container"
+  >
+    <ul
+      class="wrapper"
+    >
+      <li
+        class="wrapper__item wrapper__item_input"
+      >
+        <input
+          class="wrapper__input"
+          placeholder="add more people..."
+          type="text"
+        />
+      </li>
+    </ul>
+  </div>
+</body>
+`;
+
+exports[`Emails Input Renderer (snapshots) should render email items 1`] = `
+<body>
+  <div
+    id="input-container"
+  >
+    <ul
+      class="wrapper"
+    >
+      <li
+        class="wrapper__item wrapper__item_email wrapper__item_invalid"
+        data-email="abcdef"
+      >
+        <span
+          class="wrapper__item-title"
+        >
+          abcdef
+        </span>
+        <button
+          aria-label="Remove abcdef"
+          class="wrapper__item-remove"
+        >
+          test-file-stub
+        </button>
+      </li>
+      <li
+        class="wrapper__item wrapper__item_email"
+        data-email="abcdef@ghijk.lm"
+      >
+        <span
+          class="wrapper__item-title"
+        >
+          abcdef@ghijk.lm
+        </span>
+        <button
+          aria-label="Remove abcdef@ghijk.lm"
+          class="wrapper__item-remove"
+        >
+          test-file-stub
+        </button>
+      </li>
+      <li
+        class="wrapper__item wrapper__item_email"
+        data-email="fedcba@ghijk.lm"
+      >
+        <span
+          class="wrapper__item-title"
+        >
+          fedcba@ghijk.lm
+        </span>
+        <button
+          aria-label="Remove fedcba@ghijk.lm"
+          class="wrapper__item-remove"
+        >
+          test-file-stub
+        </button>
+      </li>
+      <li
+        class="wrapper__item wrapper__item_input"
+      >
+        <input
+          class="wrapper__input"
+          placeholder="add more people..."
+          type="text"
+        />
+      </li>
+    </ul>
+  </div>
+</body>
+`;
+
+exports[`Emails Input Renderer (snapshots) should rerender email items 1`] = `
+<body>
+  <div
+    id="input-container"
+  >
+    <ul
+      class="wrapper"
+    >
+      <li
+        class="wrapper__item wrapper__item_email wrapper__item_invalid"
+        data-email="abcdef"
+      >
+        <span
+          class="wrapper__item-title"
+        >
+          abcdef
+        </span>
+        <button
+          aria-label="Remove abcdef"
+          class="wrapper__item-remove"
+        >
+          test-file-stub
+        </button>
+      </li>
+      <li
+        class="wrapper__item wrapper__item_email"
+        data-email="fedcba@ghijk.lm"
+      >
+        <span
+          class="wrapper__item-title"
+        >
+          fedcba@ghijk.lm
+        </span>
+        <button
+          aria-label="Remove fedcba@ghijk.lm"
+          class="wrapper__item-remove"
+        >
+          test-file-stub
+        </button>
+      </li>
+      <li
+        class="wrapper__item wrapper__item_email"
+        data-email="12345@gmail.com"
+      >
+        <span
+          class="wrapper__item-title"
+        >
+          12345@gmail.com
+        </span>
+        <button
+          aria-label="Remove 12345@gmail.com"
+          class="wrapper__item-remove"
+        >
+          test-file-stub
+        </button>
+      </li>
+      <li
+        class="wrapper__item wrapper__item_input"
+      >
+        <input
+          class="wrapper__input"
+          placeholder="add more people..."
+          type="text"
+        />
+      </li>
+    </ul>
+  </div>
+</body>
+`;
