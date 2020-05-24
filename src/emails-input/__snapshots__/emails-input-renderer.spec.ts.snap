@@ -35,6 +35,7 @@ exports[`Emails Input Renderer (snapshots) should render email items 1`] = `
         data-email="abcdef"
       >
         <span
+          aria-label="abcdef, invalid"
           class="container__email"
         >
           abcdef
@@ -51,6 +52,7 @@ exports[`Emails Input Renderer (snapshots) should render email items 1`] = `
         data-email="abcdef@ghijk.lm"
       >
         <span
+          aria-label="abcdef@ghijk.lm, valid"
           class="container__email"
         >
           abcdef@ghijk.lm
@@ -67,6 +69,7 @@ exports[`Emails Input Renderer (snapshots) should render email items 1`] = `
         data-email="fedcba@ghijk.lm"
       >
         <span
+          aria-label="fedcba@ghijk.lm, valid"
           class="container__email"
         >
           fedcba@ghijk.lm
@@ -105,6 +108,7 @@ exports[`Emails Input Renderer (snapshots) should rerender email items 1`] = `
         data-email="abcdef"
       >
         <span
+          aria-label="abcdef, invalid"
           class="container__email"
         >
           abcdef
@@ -121,6 +125,7 @@ exports[`Emails Input Renderer (snapshots) should rerender email items 1`] = `
         data-email="fedcba@ghijk.lm"
       >
         <span
+          aria-label="fedcba@ghijk.lm, valid"
           class="container__email"
         >
           fedcba@ghijk.lm
@@ -137,6 +142,7 @@ exports[`Emails Input Renderer (snapshots) should rerender email items 1`] = `
         data-email="12345@gmail.com"
       >
         <span
+          aria-label="12345@gmail.com, valid"
           class="container__email"
         >
           12345@gmail.com
