@@ -1,8 +1,6 @@
 /* Container */
 
 .container {
-  width: 100%;
-  margin: 0;
   padding: 4px 6px;
   display: flex;
   flex-wrap: wrap;

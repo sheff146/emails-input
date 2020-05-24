@@ -2,7 +2,6 @@
   "author": "sheff146",
   "description": "",
   "license": "MIT",
-  "main": "src/index.ts",
   "name": "emails-input",
   "private": true,
   "scripts": {

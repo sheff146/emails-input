@@ -27,27 +27,33 @@ var config = {
   devtool: isProd ? "hidden-source-map" : "source-map",
   context: path.resolve("./src"),
   entry: {
-    app: "./index.ts"
+    "app-styles": "./index.css",
+    "emails-input": "./emails-input/index.ts",
+    "app-script": "./index.js"
   },
   output: {
     path: path.resolve("./dist"),
-    filename: "[name].bundle.js"
+    filename: "[name].js"
   },
   module: {
     rules: [
       {
         enforce: "pre",
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         exclude: [/\/node_modules\//],
         use: ["awesome-typescript-loader", "source-map-loader"]
       },
       { test: /\.html$/, loader: "html-loader" },
       {
-        test: /\.css$/,
+        test: /emails-input\.css$/,
         loaders: [
           "style-loader",
           "css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
         ]
+      },
+      {
+        test: /index\.css$/,
+        loaders: ["style-loader", "css-loader"]
       }
     ]
   },

@@ -17,5 +17,5 @@ module.exports = {
     "\\.svg$": "<rootDir>/__mocks__/imageMock.js",
     "\\.css$": "identity-obj-proxy"
   },
-  collectCoverageFrom: ["src/*.ts"]
+  collectCoverageFrom: ["src/emails-input/*.ts"]
 };

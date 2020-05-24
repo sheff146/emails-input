@@ -1,0 +1,66 @@
+body,
+button {
+  font-family: "Open Sans", sans-serif;
+}
+
+.main-block {
+  max-width: 540px;
+  min-height: 300px;
+  max-height: 500px;
+  margin: auto;
+}
+
+.share-form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #f8f8f7;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.share-form__header {
+  padding: 32px 50px 0;
+}
+
+.share-form__title {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: normal;
+  margin: 0;
+  color: #050038;
+}
+
+.share-form__body {
+  padding: 24px 50px;
+  flex-grow: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.share-form__body > ul {
+  align-self: stretch;
+  justify-self: stretch;
+  flex-grow: 1;
+  margin: 0;
+}
+
+.share-form__footer {
+  padding: 24px 50px 32px;
+  background: #ffffff;
+}
+
+.share-form__button {
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  background: #4262ff;
+  border: none;
+}
+
+.share-form__button:first-child {
+  margin-right: 16px;
+}
