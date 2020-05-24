@@ -28,7 +28,7 @@
 
 .container__item_email {
   min-width: 0;
-  padding: 5px 8px;
+  padding: 0 8px;
   border-radius: 100px;
   background: rgba(102, 153, 255, 0.2);
 }
@@ -41,13 +41,18 @@
 
 /* Item content */
 
+.container__input,
+.container__email,
+.container__remove {
+  font-size: 14px;
+  line-height: 24px;
+}
+
 .container__input {
   width: 100%;
   border: none;
   outline: none;
   font-family: inherit;
-  font-size: 14px;
-  line-height: 24px;
 }
 
 .container__input::placeholder {
@@ -57,7 +62,6 @@
 .container__email {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 14px;
   color: #050038;
 }
 
