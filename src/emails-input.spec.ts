@@ -32,6 +32,31 @@ describe("EmailsInput API", () => {
     expect(renderSpy).toBeCalledTimes(1);
   });
 
+  it("should rerender on UI updates", () => {
+    const renderSpy = jest.spyOn(input["_renderer"], "render");
+    input.replaceEmails(["a", "abc@xyz.com", "b", "a"]);
+    renderSpy.mockClear();
+
+    input["_renderer"]["onChanges"]({
+      addedItems: ["abc@xyz.com", "123@sdf.gf", "aaaaa"],
+      removedItems: []
+    });
+
+    expect(renderSpy).toBeCalledTimes(1);
+  });
+
+  it("should notify subscribers on UI updates", () => {
+    const callback = jest.fn();
+    input.subscribe(callback);
+
+    input["_renderer"]["onChanges"]({
+      addedItems: ["abc@xyz.com", "123@sdf.gf", "aaaaa"],
+      removedItems: []
+    });
+
+    expect(callback).toBeCalledTimes(1);
+  });
+
   it("should notify several subscribers", () => {
     const callback1 = jest.fn();
     const callback2 = jest.fn();
@@ -64,6 +89,17 @@ describe("EmailsInput API", () => {
     expect(callback1).toBeCalledTimes(2);
     expect(callback2).toBeCalledTimes(1);
     expect(callback3).toBeCalledTimes(2);
+  });
+
+  it("should handle subscriber error", () => {
+    const error = new Error("test");
+    const consoleSpy = jest.spyOn(console, "error");
+
+    input.subscribe(() => {
+      throw error;
+    });
+    expect(() => input.replaceEmails([])).not.toThrow();
+    expect(consoleSpy).toBeCalledWith(error);
   });
 
   it("should report correct changes", () => {
