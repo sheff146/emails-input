@@ -5,6 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+  align-content: flex-start;
   border: 1px solid #c3c2cf;
   border-radius: 4px;
   overflow: auto;
