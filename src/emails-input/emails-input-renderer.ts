@@ -87,6 +87,7 @@ export class EmailsInputRenderer {
 
   private processInputEvent(e: Event) {
     const target = e.target as HTMLInputElement;
+    // istanbul ignore next
     if (!target.classList.contains(styles.input)) {
       return;
     }

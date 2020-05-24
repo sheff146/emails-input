@@ -27,7 +27,7 @@ export class EmailsInput implements IEmailsInput {
 
     return {
       unsubscribe: () => {
-        const index = this._callbacks.findIndex(cb => cb === callback);
+        const index = this._callbacks.indexOf(callback);
         this._callbacks.splice(index, 1);
       }
     };
@@ -67,10 +67,17 @@ export class EmailsInput implements IEmailsInput {
     const removedEmails: Email[] = [];
 
     removedItems.forEach(emailStr => {
-      const index = this._emails.findIndex(email => email.value === emailStr);
-      const removedItem = this._emails.splice(index, 1);
-      removedEmails.push(...removedItem);
+      for (let i = 0; i < this._emails.length; i++) {
+        const email = this._emails[i];
+        // istanbul ignore else
+        if (email.value === emailStr) {
+          const removedItem = this._emails.splice(i, 1);
+          removedEmails.push(...removedItem);
+          return;
+        }
+      }
     });
+
     return removedEmails;
   }
 
