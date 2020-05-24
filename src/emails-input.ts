@@ -34,33 +34,44 @@ export class EmailsInput implements IEmailsInput {
   }
 
   private processChanges(changes: IChanges<string>) {
-    const removedEmails: Email[] = [];
-    changes.removedItems.forEach(emailStr => {
-      const index = this._emails.findIndex(email => email.value === emailStr);
-      const removedItem = this._emails.splice(index, 1);
-      removedEmails.push(...removedItem);
-    });
-
-    const newEmails = changes.addedItems
-      .reduce<string[]>((arr, item) => {
-        // filter out empty and duplicate values
-        if (item) {
-          const exists =
-            arr.find(arrItem => arrItem === item) ||
-            this._emails.find(email => email.value === item);
-          if (!exists) {
-            arr.push(item);
-          }
-        }
-        return arr;
-      }, [])
-      .map(email => new Email(email));
-
-    this._emails.push(...newEmails);
+    const removedEmails = this.removeItems(changes.removedItems);
+    const newEmails = this.addItems(changes.addedItems);
 
     this._renderer.render(this._emails);
 
     this.notifySubscribers(newEmails, removedEmails);
+  }
+
+  private addItems(addedItems: string[]) {
+    const newEmails = addedItems
+      .reduce<string[]>((items, newItem) => {
+        // filter out empty and duplicate values
+        if (newItem) {
+          const existingItem =
+            items.find(item => item === newItem) ||
+            this._emails.find(email => email.value === newItem);
+          if (!existingItem) {
+            items.push(newItem);
+          }
+        }
+        return items;
+      }, [])
+      .map(item => new Email(item));
+
+    this._emails.push(...newEmails);
+
+    return newEmails;
+  }
+
+  private removeItems(removedItems: string[]) {
+    const removedEmails: Email[] = [];
+
+    removedItems.forEach(emailStr => {
+      const index = this._emails.findIndex(email => email.value === emailStr);
+      const removedItem = this._emails.splice(index, 1);
+      removedEmails.push(...removedItem);
+    });
+    return removedEmails;
   }
 
   private notifySubscribers(added: Email[], removed: Email[]): void {
