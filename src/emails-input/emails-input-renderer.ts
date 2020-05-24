@@ -25,23 +25,23 @@ export class EmailsInputRenderer {
   }
 
   render(emails: Email[]) {
-    let existingItems = Array.from(
+    let existingItems = Array.prototype.slice.call(
       this._container.querySelectorAll(`.${styles.emailItem}`)
     ) as HTMLElement[];
 
     existingItems = existingItems.filter(item => {
-      const email = emails.find(email => email.value === item.dataset.email);
-      if (!email) {
+      const hasEmail = emails.some(email => email.value === item.dataset.email);
+      if (!hasEmail) {
         this._container.removeChild(item);
       }
 
-      return email;
+      return hasEmail;
     });
 
     const itemsToAdd: Email[] = [];
     emails.forEach(email => {
-      const item = existingItems.find(item => email.value === item.dataset.email);
-      if (!item) {
+      const hasEmail = existingItems.some(item => email.value === item.dataset.email);
+      if (!hasEmail) {
         itemsToAdd.push(email);
       }
     });

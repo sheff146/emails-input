@@ -47,10 +47,10 @@ export class EmailsInput implements IEmailsInput {
       .reduce<string[]>((items, newItem) => {
         // filter out empty and duplicate values
         if (newItem) {
-          const existingItem =
-            items.find(item => item === newItem) ||
-            this._emails.find(email => email.value === newItem);
-          if (!existingItem) {
+          const hasItem =
+            items.some(item => item === newItem) ||
+            this._emails.some(email => email.value === newItem);
+          if (!hasItem) {
             items.push(newItem);
           }
         }
