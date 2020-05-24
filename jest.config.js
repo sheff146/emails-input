@@ -2,7 +2,6 @@ module.exports = {
   transform: {
     ".(ts|tsx)": "ts-jest"
   },
-  testEnvironment: "node",
   testRegex: "\\.(test|spec)\\.ts$",
   moduleFileExtensions: ["ts", "js"],
   coveragePathIgnorePatterns: ["/node_modules/"],
@@ -13,6 +12,10 @@ module.exports = {
       lines: 95,
       statements: 95
     }
+  },
+  moduleNameMapper: {
+    "\\.svg$": "<rootDir>/__mocks__/imageMock.js",
+    "\\.css$": "identity-obj-proxy"
   },
   collectCoverageFrom: ["src/*.ts"]
 };

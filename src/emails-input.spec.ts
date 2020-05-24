@@ -1,19 +1,13 @@
 import { EmailsInput } from "./emails-input";
 import { IChanges, IEmail } from "./interfaces";
 
-const renderMock = jest.fn();
-
-jest.mock("./emails-input-renderer", () => ({
-  EmailsInputRenderer: jest.fn().mockImplementation(() => ({
-    render: renderMock
-  }))
-}));
-
 describe("EmailsInput API", () => {
-  const createInput = () => new EmailsInput(null as any);
+  const createInput = () =>
+    new EmailsInput(document.getElementById("input-container") as HTMLElement);
 
   beforeEach(() => {
     jest.clearAllMocks();
+    document.body.innerHTML = '<div class="share-form__body" id="input-container"></div>';
   });
 
   it("should create an empty input", () => {
@@ -36,10 +30,11 @@ describe("EmailsInput API", () => {
 
   it("should rerender on replacing e-mails", () => {
     const input = createInput();
+    const renderSpy = jest.spyOn(input["_renderer"], "render");
 
     input.replaceEmails(["a", "abc@xyz.com", "b", "a"]);
 
-    expect(renderMock).toBeCalledTimes(1);
+    expect(renderSpy).toBeCalledTimes(1);
   });
 
   it("should notify several subscribers", () => {
