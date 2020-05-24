@@ -6,14 +6,16 @@ const emailsInputStyles = require("./emails-input.css");
 const styles = {
   wrapper: emailsInputStyles["wrapper"],
   item: emailsInputStyles["wrapper__item"],
+  itemEmail: emailsInputStyles["wrapper__item_email"],
   itemInvalid: emailsInputStyles["wrapper__item_invalid"],
   itemTitle: emailsInputStyles["wrapper__item-title"],
   itemRemove: emailsInputStyles["wrapper__item-remove"],
+  itemInput: emailsInputStyles["wrapper__item_input"],
   input: emailsInputStyles["wrapper__input"]
 };
 
 export class EmailsInputRenderer {
-  private readonly _wrapper: HTMLDivElement;
+  private readonly _wrapper: HTMLElement;
 
   constructor(private container: HTMLElement, private onChanges: CallbackFn<string>) {
     this._wrapper = this.createWrapper();
@@ -22,7 +24,7 @@ export class EmailsInputRenderer {
 
   render(emails: Email[]) {
     let existingItems = Array.from(
-      this._wrapper.querySelectorAll(`.${styles.item}`)
+      this._wrapper.querySelectorAll(`.${styles.itemEmail}`)
     ) as HTMLElement[];
 
     existingItems = existingItems.filter(item => {
@@ -42,7 +44,7 @@ export class EmailsInputRenderer {
       }
     });
 
-    const input = this._wrapper.querySelector(`.${styles.input}`);
+    const input = this._wrapper.querySelector(`.${styles.itemInput}`);
     itemsToAdd.forEach(email => {
       const item = this.createEmailItem(email);
       this._wrapper.insertBefore(item, input);
@@ -50,17 +52,17 @@ export class EmailsInputRenderer {
     this._wrapper.scrollTop = this._wrapper.scrollHeight - this._wrapper.clientHeight;
   }
 
-  private createWrapper(): HTMLDivElement {
-    const wrapper = document.createElement("div");
+  private createWrapper(): HTMLElement {
+    const wrapper = document.createElement("ul");
 
     wrapper.className = styles.wrapper;
-    wrapper.innerHTML = `<input type="text" class="${styles.input}" placeholder="add more people..."/>`;
+    wrapper.innerHTML = `<li class="${styles.item} ${styles.itemInput}"><input type="text" class="${styles.input}" placeholder="add more people..."/></li>`;
 
     wrapper.addEventListener("click", e => {
       const target = e.target as HTMLElement;
-      const element = getAncestorWithClassName(target, styles.itemRemove);
-      if (element) {
-        const email = element.parentElement?.dataset?.email;
+
+      if (target.className === styles.itemRemove) {
+        const email = target.parentElement?.dataset?.email;
         if (email) {
           this.onChanges({ addedItems: [], removedItems: [email] });
         }
@@ -115,11 +117,12 @@ export class EmailsInputRenderer {
     target.value = "";
   }
 
-  private createEmailItem(email: Email): HTMLDivElement {
-    const item = document.createElement("div");
+  private createEmailItem(email: Email): HTMLElement {
+    const item = document.createElement("li");
 
     item.dataset.email = email.value;
     item.classList.add(styles.item);
+    item.classList.add(styles.itemEmail);
 
     if (!email.isValid) {
       item.classList.add(styles.itemInvalid);
@@ -127,25 +130,10 @@ export class EmailsInputRenderer {
 
     item.innerHTML =
       `<span class="${styles.itemTitle}">${email.value}</span>` +
-      `<button class="${
-        styles.itemRemove
-      }" aria-label="Remove item">${require("!!html-loader!./remove.svg")}</button>`;
+      `<button class="${styles.itemRemove}" aria-label="Remove ${
+        email.value
+      }">${require("!!html-loader!./remove.svg")}</button>`;
 
     return item;
   }
-}
-
-function getAncestorWithClassName(
-  element: HTMLElement | null,
-  className: string
-): HTMLElement | null {
-  if (!element) {
-    return null;
-  }
-
-  if (element.classList.contains(className)) {
-    return element;
-  }
-
-  return getAncestorWithClassName(element.parentElement, className);
 }
